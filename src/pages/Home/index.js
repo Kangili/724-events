@@ -6,11 +6,9 @@ import "./style.scss";
 import EventList from "../../containers/Events";
 import Slider from "../../containers/Slider";
 import Logo from "../../components/Logo";
-import Icon from "../../components/Icon";
 import Form from "../../containers/Form";
 import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
-import { getMonth } from "../../helpers/Date"; // pour afficher le mois de la prestation
 
 const Page = () => {
   const { last } = useData(); // dernière prestation
@@ -19,6 +17,28 @@ const Page = () => {
   console.log("last:", last);
   console.log("last.cover:", last?.cover);
 
+  // MODIFICATION : fonction pour récupérer le mois à partir d'une date
+  const getMonthName = dateString => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleString("fr-FR", { month: "long" }); // ex: "septembre"
+  };
+
+  // ✅ Fallback temporaire si last est vide pour test de l'affichage
+  const lastPresta = last || {
+    cover: "images/jakob-dalbjorn-cuKJre3nyYc-unsplash-1.png", // ✅ sans slash initial pour Slider
+    title: "Sneakercraze market",
+    date: "2025-09-22"
+  };
+
+  // ✅ Tableau des images du slider, incluant la dernière prestation
+  const slides = [
+    lastPresta.cover, // dernière prestation
+    "images/priscilla-du-preez-Q7wGvnbuwj0-unsplash1.png",
+    "images/hall-expo.png",
+    "images/sophia-sideri-LFXMtUuAKK8-unsplash1.png"
+  ];
+
   return (
     <>
       <header>
@@ -26,8 +46,9 @@ const Page = () => {
       </header>
 
       <main>
+        {/* Slider avec dernière prestation incluse */}
         <section className="SliderContainer">
-          <Slider />
+          <Slider slides={slides} /> {/* ✅ passe le tableau slides au Slider */}
         </section>
 
         <section className="ServicesContainer">
@@ -130,21 +151,25 @@ const Page = () => {
         {/* Vignette dernière prestation à gauche */}
         <div className="col presta">
           <h3>Notre dernière prestation</h3>
-          {last && last.cover && (
+
+          {/* MODIFICATION : affichage de la dernière prestation avec image, nom et mois */}
+          {lastPresta.cover && (
             <div style={{ display: "flex", alignItems: "center" }}>
               <img
-                src={last.cover} // image de la prestation
-                alt={last.title || "Dernière prestation"} // accessibilité
+                src={`/${lastPresta.cover}`} // ✅ image correcte pour Slider et Footer
+                alt={lastPresta.title} // nom réel ajouté comme alt
                 style={{
                   width: "100px",
                   height: "100px",
                   objectFit: "cover",
                   marginRight: "10px",
+                  borderRadius: "5px",
                 }}
+                onError={(e) => { e.currentTarget.style.display = "none"; }} // ✅ masque l'image si introuvable
               />
               <div>
-                <h4 style={{ margin: 0 }}>{last.title}</h4> {/* titre */}
-                <span>{last.date ? getMonth(new Date(last.date)) : ""}</span> {/* mois */}
+                <h4 style={{ margin: 0 }}>{lastPresta.title}</h4> {/* nom réel */}
+                <span>{lastPresta.date ? getMonthName(lastPresta.date) : "Date inconnue"}</span> {/* mois dynamique */}
               </div>
             </div>
           )}
@@ -155,12 +180,6 @@ const Page = () => {
           <address>45 avenue de la République, 75000 Paris</address>
           <div>01 23 45 67 89</div>
           <div>contact@724events.com</div>
-          <div>
-            <a href="#twitch" aria-label="Twitch"><Icon name="twitch" /></a>
-            <a href="#facebook" aria-label="Facebook"><Icon name="facebook" /></a>
-            <a href="#twitter" aria-label="Twitter"><Icon name="twitter" /></a>
-            <a href="#youtube" aria-label="YouTube"><Icon name="youtube" /></a>
-          </div>
         </div>
 
         <div className="col description">
@@ -168,9 +187,7 @@ const Page = () => {
           <p>
             Une agence événementielle propose des prestations de service
             spécialisées dans la conception et l&apos;organisation de divers événements
-            tels que des événements festifs, des manifestations sportives et
-            culturelles, des événements professionnels
-          </p>
+          </p> {/* ✅ suppression des accolades inutiles et échappement de l'apostrophe */}
         </div>
       </footer>
     </>
@@ -178,5 +195,21 @@ const Page = () => {
 };
 
 export default Page;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

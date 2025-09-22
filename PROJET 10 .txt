@@ -1,0 +1,31 @@
+PROJET 10 
+
+quand on fait défiler les images une image blanche apparait
+l'ordre des images n'est pas le bon, ils doivent s'afficher du plus ancien au plus récent ok c'est fait 
+
+
+NOS REALISATIONS 
+dans les sélécteurs lorsqu'on choisi une catégorie il ne se pass rien , on veut que les filtres s'appliquent pour afficher que les filtres de la catégorie sélectionner
+la liste des évènements n'affichent pas les bons mois, et d'autre restent vident
+
+CONTACT FORMULAIRE
+problème sur le formulaire de contact quand on envoie un message, il ne se passe rien
+confirmation d'envoie doit s'afficher il faudra le faire apparaitre ok 
+
+FOOTER A GAUCHE VIGNETTE POUR AFFICHER DERNIERE PRESTATTION
+à gauche la vignette pour afficher la dernière prestation qui se compose d'une image, nom et mois. Il faut afficher la photo de la prestation concerner 
+
+lancer le projet npm run start dans git bash, git bash pour le test npm run test et j'appuie sur le A j'ouvre un autre terminal 
+
+
+correction dans Events index.js // Filtrage par type, // Pagination : garder seulement les événements de la page actuelle, // Nombre total de pages pour la pagination,// Liste unique des types d'événements
+correction dans components /select affichage des filtres pour chaque catégorie 
+
+31/08 correction Container Slider index.js le carousel plus d'image blanche affichage plus ancien au plus récent
+correction dans Container Form index.js le formulaire message denvoie apparition 
+correction dans Page/Home 
+
+FOOTER A CORRIGER 
+
+
+
