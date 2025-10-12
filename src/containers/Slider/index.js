@@ -14,23 +14,15 @@ const Slider = () => {
     .sort((a, b) => new Date(a.date) - new Date(b.date));
 
   // 🔹 Change l'image toutes les 5 secondes
+   const nextCard = () => {
+    setTimeout(
+      () => setIndex(index < byDateAsc.length - 1 ? index + 1 : 0),
+      5000
+    );
+  };
   useEffect(() => {
-    const startTimer = () => {
-      if (!byDateAsc || byDateAsc.length === 0) return undefined; // pas de timer si vide
-
-      const timer = setTimeout(() => {
-        // passe à l'image suivante ou revient à la première
-        setIndex((prev) =>
-          prev < byDateAsc.length - 1 ? prev + 1 : 0
-        );
-      }, 5000);
-
-      return () => clearTimeout(timer); // supprime le timer ancien
-    };
-
-    const cleanup = startTimer();
-    return cleanup;
-  }, [index, byDateAsc]);
+    nextCard();
+  });
 
   return (
     <div className="SlideCardList">

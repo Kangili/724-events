@@ -25,7 +25,9 @@ correction dans components /select affichage des filtres pour chaque catégorie
 correction dans Container Form index.js le formulaire message denvoie apparition 
 correction dans Page/Home 
 
-FOOTER A CORRIGER 
+FOOTER A CORRIGER dans Pages/Home index.js dernière prestation qui se compose d'une image du nom et du mois
+
+22/09/25 AFFICHAGE VIGNETTE EN BAS A GAUCHE Tout est aligné en bas à gauche grâce au Flexbox sur la colonne .presta.
 
 
 

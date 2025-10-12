@@ -1,6 +1,7 @@
 import Menu from "../../containers/Menu";
 import ServiceCard from "../../components/ServiceCard";
 import PeopleCard from "../../components/PeopleCard";
+import EventCard from "../../components/EventCard";
 
 import "./style.scss";
 import EventList from "../../containers/Events";
@@ -11,33 +12,7 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const { last } = useData(); // dernière prestation
-
-  // Debug : vérifier que last et last.cover existent
-  console.log("last:", last);
-  console.log("last.cover:", last?.cover);
-
-  // MODIFICATION : fonction pour récupérer le mois à partir d'une date
-  const getMonthName = dateString => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return date.toLocaleString("fr-FR", { month: "long" }); // ex: "septembre"
-  };
-
-  // ✅ Fallback temporaire si last est vide pour test de l'affichage
-  const lastPresta = last || {
-    cover: "images/jakob-dalbjorn-cuKJre3nyYc-unsplash-1.png", // ✅ sans slash initial pour Slider
-    title: "Sneakercraze market",
-    date: "2025-09-22"
-  };
-
-  // ✅ Tableau des images du slider, incluant la dernière prestation
-  const slides = [
-    lastPresta.cover, // dernière prestation
-    "images/priscilla-du-preez-Q7wGvnbuwj0-unsplash1.png",
-    "images/hall-expo.png",
-    "images/sophia-sideri-LFXMtUuAKK8-unsplash1.png"
-  ];
+  const { last } = useData();
 
   return (
     <>
@@ -46,11 +21,11 @@ const Page = () => {
       </header>
 
       <main>
-        {/* Slider avec dernière prestation incluse */}
         <section className="SliderContainer">
-          <Slider slides={slides} /> {/* ✅ passe le tableau slides au Slider */}
+          <Slider/>
         </section>
 
+        {/* Le reste de la page reste inchangé */}
         <section className="ServicesContainer">
           <h2 className="Title">Nos services</h2>
           <p>Nous organisons des événements sur mesure partout dans le monde</p>
@@ -90,36 +65,12 @@ const Page = () => {
           <h2 className="Title">Notre équipe</h2>
           <p>Une équipe d’experts dédiés à l’organisation de vos événements</p>
           <div className="ListContainer">
-            <PeopleCard
-              imageSrc="/images/stephanie-liverani-Zz5LQe-VSMY-unsplash.png"
-              name="Samira"
-              position="CEO"
-            />
-            <PeopleCard
-              imageSrc="/images/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.png"
-              name="Jean-baptiste"
-              position="Directeur marketing"
-            />
-            <PeopleCard
-              imageSrc="/images/christina-wocintechchat-com-SJvDxw0azqw-unsplash.png"
-              name="Alice"
-              position="CXO"
-            />
-            <PeopleCard
-              imageSrc="/images/jonas-kakaroto-KIPqvvTOC1s-unsplash.png"
-              name="Luís"
-              position="Animateur"
-            />
-            <PeopleCard
-              imageSrc="/images/amy-hirschi-b3AYk8HKCl0-unsplash1.png"
-              name="Christine"
-              position="VP animation"
-            />
-            <PeopleCard
-              imageSrc="/images/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.png"
-              name="Isabelle"
-              position="VP communication"
-            />
+            <PeopleCard imageSrc="/images/stephanie-liverani-Zz5LQe-VSMY-unsplash.png" name="Samira" position="CEO"/>
+            <PeopleCard imageSrc="/images/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.png" name="Jean-baptiste" position="Directeur marketing"/>
+            <PeopleCard imageSrc="/images/christina-wocintechchat-com-SJvDxw0azqw-unsplash.png" name="Alice" position="CXO"/>
+            <PeopleCard imageSrc="/images/jonas-kakaroto-KIPqvvTOC1s-unsplash.png" name="Luís" position="Animateur"/>
+            <PeopleCard imageSrc="/images/amy-hirschi-b3AYk8HKCl0-unsplash1.png" name="Christine" position="VP animation"/>
+            <PeopleCard imageSrc="/images/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.png" name="Isabelle" position="VP communication"/>
           </div>
         </section>
 
@@ -129,50 +80,27 @@ const Page = () => {
             Content={
               <div className="ModalMessage--success">
                 <div>Message envoyé !</div>
-                <p>
-                  Merci pour votre message nous tâcherons de vous répondre dans
-                  les plus brefs délais
-                </p>
+                <p>Merci pour votre message nous tâcherons de vous répondre dans les plus brefs délais</p>
               </div>
             }
           >
             {({ setIsOpened }) => (
-              <Form
-                onSuccess={() => setIsOpened(true)}
-                onError={() => null}
-              />
+              <Form onSuccess={() => setIsOpened(true)} onError={() => null}/>
             )}
           </Modal>
         </div>
       </main>
 
-      {/* FOOTER */}
       <footer className="row">
-        {/* Vignette dernière prestation à gauche */}
         <div className="col presta">
           <h3>Notre dernière prestation</h3>
-
-          {/* MODIFICATION : affichage de la dernière prestation avec image, nom et mois */}
-          {lastPresta.cover && (
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <img
-                src={`/${lastPresta.cover}`} // ✅ image correcte pour Slider et Footer
-                alt={lastPresta.title} // nom réel ajouté comme alt
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  objectFit: "cover",
-                  marginRight: "10px",
-                  borderRadius: "5px",
-                }}
-                onError={(e) => { e.currentTarget.style.display = "none"; }} // ✅ masque l'image si introuvable
-              />
-              <div>
-                <h4 style={{ margin: 0 }}>{lastPresta.title}</h4> {/* nom réel */}
-                <span>{lastPresta.date ? getMonthName(lastPresta.date) : "Date inconnue"}</span> {/* mois dynamique */}
-              </div>
-            </div>
-          )}
+          <EventCard
+          imageSrc={last?.cover}
+          title={last?.title}
+          date={new Date(last?.date)}
+          small
+          label="boom"
+        />
         </div>
 
         <div className="col contact">
@@ -184,10 +112,7 @@ const Page = () => {
 
         <div className="col description">
           <Logo size="large" />
-          <p>
-            Une agence événementielle propose des prestations de service
-            spécialisées dans la conception et l&apos;organisation de divers événements
-          </p> {/* ✅ suppression des accolades inutiles et échappement de l'apostrophe */}
+          <p>Une agence événementielle propose des prestations de service spécialisées dans la conception et l&apos;organisation de divers événements</p>
         </div>
       </footer>
     </>
@@ -195,7 +120,6 @@ const Page = () => {
 };
 
 export default Page;
-
 
 
 
