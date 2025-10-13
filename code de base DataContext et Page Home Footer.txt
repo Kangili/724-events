@@ -1,3 +1,61 @@
+DATACONTEXT : 
+
+import PropTypes from "prop-types"; import { createContext, useCallback, useContext, useEffect, useState, } from "react"; const DataContext = createContext({}); export const api = { loadData: async () => { const json = await fetch("/events.json"); return json.json(); }, }; export const DataProvider = ({ children }) => { const [error, setError] = useState(null); const import PropTypes from "prop-types";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
+
+const DataContext = createContext({});
+
+export const api = {
+  loadData: async () => {
+    const json = await fetch("/events.json");
+    return json.json();
+  },
+};
+
+export const DataProvider = ({ children }) => {
+  const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
+
+  const getData = useCallback(async () => {
+    try {
+      const loadedData = await api.loadData(); // récupère les données depuis l'API
+      setData(loadedData); // stocke les données telles quelles
+      console.log(loadedData.events);
+    } catch (err) {
+      setError(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (data) return; // si data existe déjà, ne recharge pas
+    getData();
+  });
+
+  return (
+    <DataContext.Provider
+      // eslint-disable-next-line react/jsx-no-constructed-context-values
+      value={{
+        data,
+        error,
+      }}
+    >
+      {children}
+    </DataContext.Provider>
+  );
+};
+
+DataProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export const useData = () => useContext(DataContext);
+export default DataContext;
+
+
+
+
+PAGE/HOME FOOTER : 
+
 import Menu from "../../containers/Menu";
 import ServiceCard from "../../components/ServiceCard";
 import PeopleCard from "../../components/PeopleCard";
@@ -12,9 +70,7 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const { data } = useData(); // récupère toutes les données
-  // 🟢 Calcul de la dernière prestation
-  const last = data?.events?.length ? data.events[data.events.length - 1] : null;
+  const { last } = useData();
 
   return (
     <>
@@ -24,7 +80,7 @@ const Page = () => {
 
       <main>
         <section className="SliderContainer">
-          <Slider />
+          <Slider/>
         </section>
 
         <section className="ServicesContainer">
@@ -95,19 +151,13 @@ const Page = () => {
       <footer className="row">
         <div className="col presta">
           <h3>Notre dernière prestation</h3>
-          {last ? ( // Vérifie si la variable "last" contient bien une prestation
-            //  Si "last" existe, on affiche le composant EventCard avec les infos de la dernière prestation
-            <EventCard
-              imageSrc={last.cover}
-              title={last.title}
-              date={new Date(last.date)}
-              small
-              label="boom"
-            />
-          ) : (
-            // // ⚠️ Sinon (si "last" est null ou undefined), on affiche un message de chargement
-            <p>Chargement de la dernière prestation...</p>
-          )}
+          <EventCard
+            imageSrc={last?.cover}
+            title={last?.title}
+            date={new Date(last?.date)}
+            small
+            label="boom"
+          />
         </div>
 
         <div className="col contact">
@@ -127,21 +177,4 @@ const Page = () => {
 };
 
 export default Page;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -18,6 +18,8 @@ FOOTER A GAUCHE VIGNETTE POUR AFFICHER DERNIERE PRESTATTION
 lancer le projet npm run start dans git bash, git bash pour le test npm run test et j'appuie sur le A j'ouvre un autre terminal 
 
 
+12/10 : contexts/DataContext : pour Chapgtp loadedData trier les evenemets par date, que les appels récuper Apel Api tout les événement se trouve dans la variable LoadedData
+
 correction dans Events index.js // Filtrage par type, // Pagination : garder seulement les événements de la page actuelle, // Nombre total de pages pour la pagination,// Liste unique des types d'événements
 correction dans components /select affichage des filtres pour chaque catégorie 
 
