@@ -1,7 +1,7 @@
 PROJET 10 
 
 quand on fait défiler les images une image blanche apparait
-l'ordre des images n'est pas le bon, ils doivent s'afficher du plus ancien au plus récent ok c'est fait 
+l'ordre des images n'est pas le bon, ils doivent s'afficher du plus ancien au plus récent 
 
 
 NOS REALISATIONS 
@@ -18,9 +18,9 @@ FOOTER A GAUCHE VIGNETTE POUR AFFICHER DERNIERE PRESTATTION
 lancer le projet npm run start dans git bash, git bash pour le test npm run test et j'appuie sur le A j'ouvre un autre terminal 
 
 
-12/10 : contexts/DataContext : pour Chapgtp loadedData trier les evenemets par date, que les appels récuper Apel Api tout les événement se trouve dans la variable LoadedData
 
-correction dans Events index.js // Filtrage par type, // Pagination : garder seulement les événements de la page actuelle, // Nombre total de pages pour la pagination,// Liste unique des types d'événements
+
+correction dans Events(FILTRES) index.js // Filtrage par type, // Pagination : garder seulement les événements de la page actuelle, // Nombre total de pages pour la pagination,// Liste unique des types d'événements
 correction dans components /select affichage des filtres pour chaque catégorie 
 
 31/08 correction Container Slider index.js le carousel plus d'image blanche affichage plus ancien au plus récent
@@ -30,6 +30,9 @@ correction dans Page/Home
 FOOTER A CORRIGER dans Pages/Home index.js dernière prestation qui se compose d'une image du nom et du mois
 
 22/09/25 AFFICHAGE VIGNETTE EN BAS A GAUCHE Tout est aligné en bas à gauche grâce au Flexbox sur la colonne .presta.
+
+12/10 : contexts/DataContext : pour Chapgtp loadedData trier les evenemets par date, que les appels récuper Apel Api tout les événement se trouve dans la variable LoadedData ok c'est fait 
+
 
 
 
